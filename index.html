@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>生日快乐，瑶泷</title>
+<style>
+  :root{--ink:#3a3632;--ink-soft:#6b645c;--accent:#c58a6a;--bg1:#fdfaf5;--bg2:#f5ece1;}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html{scroll-behavior:smooth;}
+  body{font-family:"Songti SC","STSong","Noto Serif SC","SimSun",serif;color:var(--ink);
+    background:linear-gradient(160deg,var(--bg1) 0%,var(--bg2) 55%,#efe2d2 100%);
+    min-height:100vh;line-height:2.1;letter-spacing:.06em;overflow-x:hidden;}
+  .petal{position:fixed;top:-30px;font-size:18px;opacity:.5;pointer-events:none;z-index:1;
+    animation:fall linear infinite;}
+  @keyframes fall{0%{transform:translateY(-5vh) rotate(0deg);}100%{transform:translateY(110vh) rotate(360deg);}}
+  .wrap{max-width:640px;margin:0 auto;padding:64px 26px 90px;position:relative;z-index:2;}
+  header{text-align:center;margin-bottom:56px;}
+  .cake{font-size:44px;animation:bob 3s ease-in-out infinite;display:inline-block;}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+  h1{font-size:30px;font-weight:600;margin-top:14px;letter-spacing:.18em;}
+  .sub{color:var(--ink-soft);font-size:13px;margin-top:10px;letter-spacing:.3em;}
+  .divider{width:56px;height:1px;background:var(--accent);margin:22px auto 0;opacity:.7;}
+  .music-card{background:rgba(255,255,255,.65);border:1px solid rgba(197,138,106,.28);
+    border-radius:14px;padding:14px 14px 10px;margin:0 0 48px;box-shadow:0 6px 24px rgba(160,120,80,.10);}
+  .music-card iframe{width:100%;height:66px;border:0;border-radius:8px;display:block;}
+  .music-fallback{display:none;text-align:center;padding:6px 0 8px;}
+  .music-fallback a{display:inline-block;color:#fff;background:var(--accent);
+    padding:9px 26px;border-radius:999px;text-decoration:none;font-size:14px;letter-spacing:.15em;}
+  .music-note{text-align:center;font-size:12px;color:var(--ink-soft);margin:8px 0 4px;letter-spacing:.2em;}
+  .para{opacity:0;transform:translateY(18px);transition:opacity 1.1s ease,transform 1.1s ease;
+    margin-bottom:1.9em;font-size:16.5px;text-align:justify;}
+  .para.show{opacity:1;transform:translateY(0);}
+  .para.em{text-align:center;font-size:18px;color:var(--accent);letter-spacing:.12em;margin:2.2em 0;}
+  footer{text-align:center;margin-top:70px;color:var(--ink-soft);font-size:13px;letter-spacing:.25em;}
+  footer .sig{margin-top:10px;font-size:14px;color:var(--accent);}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <span class="cake">🎂</span>
+      <h1>生日快乐，瑶泷</h1>
+      <div class="sub">BLOOM OF YOUTH · 风华正茂</div>
+      <div class="divider"></div>
+    </header>
+    <div class="music-card">
+      <div class="music-note">♪ 点开，边听边看</div>
+      <iframe id="nePlayer" src="https://music.163.com/outchain/player?type=2&id=760058&auto=0&height=66" allow="autoplay"></iframe>
+      <div class="music-fallback" id="musicFallback">
+        <a href="https://music.163.com/song?id=760058" target="_blank">点击播放《Bloom of Youth》</a>
+      </div>
+    </div>
+    <div id="essay"></div>
+    <footer>
+      — 写给你的文字 —
+      <div class="sig">愿你永远轻盈 ✦</div>
+    </footer>
+  </div>
+<script>
+  setTimeout(function(){
+    try{
+      var f=document.getElementById('nePlayer');
+      var doc=f.contentDocument||f.contentWindow&&f.contentWindow.document;
+      if(!doc||!doc.body||doc.body.innerHTML.trim()===''){
+        document.getElementById('musicFallback').style.display='block';
+      }
+    }catch(e){
+      document.getElementById('musicFallback').style.display='block';
+    }
+  },2500);
+
+  var paras=[
+    {t:"经过漫长的等待，体会，回想，酝酿，我终于开始动笔，记录这些想要送给你的文字。"},
+    {t:"不是任何文体，只是一些文字，写到哪算哪。"},
+    {t:"就像你一样。"},
+    {t:"不是任何标签，只是一个人，走到哪是哪。"},
+    {t:"很不一样的感觉。",em:true},
+    {t:"想对你说的太多，可在脑海过了一圈，就像是棉花糖化入了水中，最后被我又咽回胃里。"},
+    {t:"它们放在胃里纷扰也平淡，说出口就过于沉重了。"},
+    {t:"我不希望我打扰到你目前的状态，它对我来说很奇特。"},
+    {t:"它很温柔，并不浅薄，却也刚健，难以解构。"},
+    {t:"在我看来这是一种选择后的状态。"},
+    {t:"我考虑了很久，决定用「轻盈」来描述。"},
+    {t:"你的轻盈很吸引我。",em:true},
+    {t:"我对你说，你的变化很大。"},
+    {t:"第一次遇到你，是24年7月。我们认识之后常常通话，所以很快熟悉起来。"},
+    {t:"你很有活力，好奇的东西很多，有很多玩得好的朋友。即便实习日程非常紧凑，但你精力旺盛，完全OK。你的想法天马行空，即便我不感兴趣，也会不由自主想要听你讲讲。让你苦恼的是复杂的家庭关系和藕断丝连的前任，听上去是大多数人都会在成长的阵痛中遇到的困境。"},
+    {t:"总的来说，自我们浅浅的交流中，我想你是一个快乐的人。"},
+    {t:"再次见面，是在两年之后的9月。"},
+    {t:"写到这里我停笔很久。"},
+    {t:"我的直觉告诉我，你不一样。"},
+    {t:"所以我一直在主动联系你。"},
+    {t:"你给我的感觉很复杂，非常复杂。"},
+    {t:"痛苦与轻松往复交织，窘迫与富足并肩而行，单调与繁复浑然一体，谦卑与傲慢互为补充。"},
+    {t:"你从原来的混沌走出，轻的上升、浮现，重的下沉、埋藏。你看上去无疑是轻盈的，但是我感到还有待定的东西，仍需你长久地筛选，打磨，放弃，继承。"},
+    {t:"你的轻盈还不太稳定，处于一种破碎和完整的叠加态，不过能看到是稳中向好的趋势。"},
+    {t:"听起来有点像塔罗的结语。你认为这次预测是可靠的吗～"},
+    {t:"不开玩笑的说，完全刮目相看，你是真的很不错。",em:true},
+    {t:"和你相处，一度让我感到焦虑。"},
+    {t:"这是我从来没接触过的关系，你也是让我感到陌生的人。"},
+    {t:"喜欢，但不敢靠太近，温度太高的爱火伤人伤己。下意识根据关系的进度，来推敲每个词合适的远近亲疏。"},
+    {t:"不适应，也没办法。"},
+    {t:"我们都默认这段关系会在某一天结束，所以很有默契地不敢在对方心里占据很重要的位置。倾注精力、心血、时间、金钱换来的重要，一夕破碎，太过痛苦。"},
+    {t:"我面对你的时候，偶尔会感到无力。"},
+    {t:"我想给你的太多，我能给你的太少。",em:true},
+    {t:"这种痛苦的感觉让我沉迷。"},
+    {t:"沉溺其中数日我才想通，是我着相了。"},
+    {t:"人追逐恒定的事物或关系，是依托外物来确定自己的存在与方位。"},
+    {t:"可人拥有的永恒只有当下，"},
+    {t:"生命的每一刻都是如此。"},
+    {t:"换言之，"},
+    {t:"只有当我专注于当下，才算抓住了永恒。"},
+    {t:"就像现在，",em:true},
+    {t:"站在你面前的是我，我爱的是你。",em:true}
+  ];
+
+  var box=document.getElementById('essay');
+  paras.forEach(function(p){
+    var d=document.createElement('div');
+    d.className='para'+(p.em?' em':'');
+    d.textContent=p.t;
+    box.appendChild(d);
+  });
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target);}
+    });
+  },{threshold:.15});
+  document.querySelectorAll('.para').forEach(function(el){io.observe(el);});
+
+  var glyphs=['❀','✿','❁','🌸'];
+  for(var i=0;i<10;i++){
+    var s=document.createElement('span');
+    s.className='petal';
+    s.textContent=glyphs[i%glyphs.length];
+    s.style.left=(Math.random()*96)+'vw';
+    s.style.animationDuration=(9+Math.random()*10)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s';
+    s.style.fontSize=(12+Math.random()*12)+'px';
+    document.body.appendChild(s);
+  }
+</script>
+</body>
+</html>
